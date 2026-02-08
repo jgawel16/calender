@@ -1,0 +1,53 @@
+name: CalenderWidget
+options:
+  bundleIdPrefix: com.calenderwidget
+  deploymentTarget:
+    iOS: "17.0"
+  xcodeVersion: "15.0"
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    TARGETED_DEVICE_FAMILY: "1"  # iPhone only
+
+targets:
+  CalenderApp:
+    type: application
+    platform: iOS
+    sources:
+      - CalenderApp
+      - Shared
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.calenderwidget.app
+        INFOPLIST_FILE: CalenderApp/Info.plist
+        CODE_SIGN_ENTITLEMENTS: CalenderApp/CalenderApp.entitlements
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+    entitlements:
+      path: CalenderApp/CalenderApp.entitlements
+    dependencies:
+      - target: CalenderWidgetExtension
+
+  CalenderWidgetExtension:
+    type: app-extension
+    platform: iOS
+    sources:
+      - CalenderWidgetExtension
+      - Shared
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.calenderwidget.app.widget
+        INFOPLIST_FILE: CalenderWidgetExtension/Info.plist
+        CODE_SIGN_ENTITLEMENTS: CalenderWidgetExtension/CalenderWidgetExtension.entitlements
+        ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME: WidgetBackground
+
+schemes:
+  CalenderApp:
+    build:
+      targets:
+        CalenderApp: all
+        CalenderWidgetExtension: all
+    run:
+      config: Debug
+    archive:
+      config: Release
