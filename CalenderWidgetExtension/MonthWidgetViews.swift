@@ -1,6 +1,15 @@
 import SwiftUI
 import WidgetKit
 
+// MARK: - Date URL Helper
+
+private func monthDateURL(for date: Date) -> URL {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd"
+    let dateString = formatter.string(from: date)
+    return URL(string: "calendarwidget://day?date=\(dateString)")!
+}
+
 // MARK: - Month Widget Main View
 
 struct MonthWidgetView: View {
@@ -62,10 +71,12 @@ struct MonthWidgetView: View {
                     .frame(height: monthCellHeight)
             }
 
-            // Day cells
+            // Day cells - each tappable to open Google Calendar
             ForEach(entry.days) { day in
-                MonthDayCellView(day: day)
-                    .frame(height: monthCellHeight)
+                Link(destination: monthDateURL(for: day.date)) {
+                    MonthDayCellView(day: day)
+                        .frame(height: monthCellHeight)
+                }
             }
 
             // Padding cells at the end to complete the grid

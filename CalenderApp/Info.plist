@@ -31,6 +31,21 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.calenderwidget.app</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>calendarwidget</string>
+			</array>
+		</dict>
+	</array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>googlecalendar</string>
+	</array>
 	<key>NSCalendarsFullAccessUsageDescription</key>
 	<string>Calendar Widget needs access to your calendars to display your events in the widget.</string>
 	<key>NSCalendarsUsageDescription</key>

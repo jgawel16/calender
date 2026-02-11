@@ -1,6 +1,15 @@
 import SwiftUI
 import WidgetKit
 
+// MARK: - Date URL Helper
+
+private func dateURL(for date: Date) -> URL {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd"
+    let dateString = formatter.string(from: date)
+    return URL(string: "calendarwidget://day?date=\(dateString)")!
+}
+
 // MARK: - Week Widget Main View
 
 struct WeekWidgetView: View {
@@ -17,10 +26,12 @@ struct WeekWidgetView: View {
             // 7-day horizontal row
             HStack(spacing: 2) {
                 ForEach(entry.days) { day in
-                    DayColumnView(
-                        day: day,
-                        isCompact: widgetFamily == .systemMedium
-                    )
+                    Link(destination: dateURL(for: day.date)) {
+                        DayColumnView(
+                            day: day,
+                            isCompact: widgetFamily == .systemMedium
+                        )
+                    }
                 }
             }
         }
@@ -109,7 +120,9 @@ struct DayColumnView: View {
             let remaining = day.events.count - visibleEvents.count
 
             ForEach(visibleEvents) { event in
-                EventPillView(event: event, isCompact: isCompact)
+                Link(destination: dateURL(for: event.startDate)) {
+                    EventPillView(event: event, isCompact: isCompact)
+                }
             }
 
             if remaining > 0 {
