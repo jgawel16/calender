@@ -67,21 +67,16 @@ struct DayData: Identifiable {
 // MARK: - Week Offset Storage
 
 struct WidgetStorage {
-    static let suiteName = "group.com.calenderwidget.shared"
     static let weekOffsetKey = "weekWidgetOffset"
     static let monthOffsetKey = "monthWidgetOffset"
 
-    static var sharedDefaults: UserDefaults? {
-        UserDefaults(suiteName: suiteName)
-    }
-
     static var weekOffset: Int {
-        get { sharedDefaults?.integer(forKey: weekOffsetKey) ?? 0 }
-        set { sharedDefaults?.set(newValue, forKey: weekOffsetKey) }
+        get { UserDefaults.standard.integer(forKey: weekOffsetKey) }
+        set { UserDefaults.standard.set(newValue, forKey: weekOffsetKey) }
     }
 
     static var monthOffset: Int {
-        get { sharedDefaults?.integer(forKey: monthOffsetKey) ?? 0 }
-        set { sharedDefaults?.set(newValue, forKey: monthOffsetKey) }
+        get { UserDefaults.standard.integer(forKey: monthOffsetKey) }
+        set { UserDefaults.standard.set(newValue, forKey: monthOffsetKey) }
     }
 }
