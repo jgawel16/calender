@@ -1,6 +1,5 @@
 import SwiftUI
 import WidgetKit
-import AppIntents
 
 // MARK: - Month Widget Main View
 
@@ -12,7 +11,7 @@ struct MonthWidgetView: View {
 
     var body: some View {
         VStack(spacing: 6) {
-            // Header with navigation
+            // Header
             monthHeader
 
             // Weekday headers
@@ -28,29 +27,11 @@ struct MonthWidgetView: View {
 
     private var monthHeader: some View {
         HStack {
-            Button(intent: MonthNavigateIntent(direction: .backward)) {
-                Image(systemName: "chevron.left")
-                    .font(.system(size: Theme.navButtonSize, weight: .semibold))
-                    .foregroundStyle(Theme.primaryBlue)
-                    .frame(width: 28, height: 28)
-            }
-            .buttonStyle(.plain)
-
             Spacer()
-
             Text(entry.displayMonth.monthYearString)
                 .font(.system(size: 16, weight: .semibold))
                 .foregroundStyle(Theme.primaryText)
-
             Spacer()
-
-            Button(intent: MonthNavigateIntent(direction: .forward)) {
-                Image(systemName: "chevron.right")
-                    .font(.system(size: Theme.navButtonSize, weight: .semibold))
-                    .foregroundStyle(Theme.primaryBlue)
-                    .frame(width: 28, height: 28)
-            }
-            .buttonStyle(.plain)
         }
     }
 
@@ -97,9 +78,6 @@ struct MonthWidgetView: View {
     }
 
     private var monthCellHeight: CGFloat {
-        // Calculate based on available space
-        // Large widget is ~316pt tall, minus header (~50pt) = ~266pt for grid
-        // Max 6 rows of days
         38
     }
 }
@@ -166,7 +144,7 @@ struct MonthWidgetView_Previews: PreviewProvider {
         MonthWidgetView(entry: MonthWidgetEntry(
             date: Date(),
             displayMonth: Date(),
-            days: (1...31).map { dayNum in
+            days: (1...28).map { dayNum in
                 DayData(
                     date: Calendar.current.date(
                         from: DateComponents(year: 2026, month: 2, day: dayNum)
@@ -184,7 +162,7 @@ struct MonthWidgetView_Previews: PreviewProvider {
                     ] : []
                 )
             },
-            firstWeekdayOffset: 6, // Feb 2026 starts on Sunday
+            firstWeekdayOffset: 6,
             numberOfDays: 28,
             monthOffset: 0
         ))

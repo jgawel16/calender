@@ -1,6 +1,5 @@
 import SwiftUI
 import WidgetKit
-import AppIntents
 
 // MARK: - Week Widget Main View
 
@@ -11,7 +10,7 @@ struct WeekWidgetView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            // Header with navigation
+            // Header
             weekHeader
                 .padding(.bottom, 6)
 
@@ -32,40 +31,11 @@ struct WeekWidgetView: View {
 
     private var weekHeader: some View {
         HStack {
-            // Previous week button
-            Button(intent: WeekNavigateIntent(direction: .backward)) {
-                Image(systemName: "chevron.left")
-                    .font(.system(size: Theme.navButtonSize, weight: .semibold))
-                    .foregroundStyle(Theme.primaryBlue)
-                    .frame(width: 24, height: 24)
-            }
-            .buttonStyle(.plain)
-
             Spacer()
-
-            // Week range title
-            VStack(spacing: 1) {
-                if entry.weekOffset == 0 {
-                    Text("This Week")
-                        .font(.system(size: Theme.monthTitleSize, weight: .semibold))
-                        .foregroundStyle(Theme.primaryText)
-                } else {
-                    Text(entry.displayDate.weekRangeString)
-                        .font(.system(size: Theme.monthTitleSize, weight: .semibold))
-                        .foregroundStyle(Theme.primaryText)
-                }
-            }
-
+            Text("This Week")
+                .font(.system(size: Theme.monthTitleSize, weight: .semibold))
+                .foregroundStyle(Theme.primaryText)
             Spacer()
-
-            // Next week button
-            Button(intent: WeekNavigateIntent(direction: .forward)) {
-                Image(systemName: "chevron.right")
-                    .font(.system(size: Theme.navButtonSize, weight: .semibold))
-                    .foregroundStyle(Theme.primaryBlue)
-                    .frame(width: 24, height: 24)
-            }
-            .buttonStyle(.plain)
         }
     }
 }
@@ -177,7 +147,7 @@ struct EventPillView: View {
                 Text(event.title)
                     .font(.system(size: Theme.eventTitleSize, weight: .regular))
                     .foregroundStyle(Theme.primaryText)
-                    .lineLimit(isCompact ? 2 : 3)  // Multiple lines to show more text
+                    .lineLimit(isCompact ? 2 : 3)
                     .fixedSize(horizontal: false, vertical: true)
                     .multilineTextAlignment(.leading)
             }
